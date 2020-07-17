@@ -28,6 +28,14 @@ public class JavaExercise2Application implements CommandLineRunner {
 		
 		Options options = new Options();
 
+        Option countOption = Option.builder("c")
+        		.longOpt( "count" )
+        		.hasArg()
+        		.argName("count")
+                .desc("How many times to print Hello World")
+                .build();
+        options.addOption(countOption);
+
         Option byeOption = Option.builder("b")
         		.required(false)
                 .desc("Say goodbye too")
@@ -50,6 +58,18 @@ public class JavaExercise2Application implements CommandLineRunner {
 
         final boolean bye = cmd.hasOption('b');
 
+        if (cmd.hasOption('c')) {
+        	String countStr = cmd.getOptionValue("count");
+      		try {
+				Integer i = Integer.parseInt(countStr);
+				while (i-- > 0) {
+					log.info("Hello World");
+				}
+			} catch (NumberFormatException e) {
+				log.error("Invalid value for count variable");
+			}
+        }
+        
         if(bye) {
         	log.info("Bye world");
         }
