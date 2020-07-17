@@ -26,9 +26,10 @@ public class JavaExercise2Application implements CommandLineRunner {
 	public void run(String... args) throws Exception {
 		log.info("Java Exercise 2: Application started!");
 		
-		Options options = new Options();
+		final Options options = new Options();
 
         Option countOption = Option.builder("c")
+        		.required(true)
         		.longOpt( "count" )
         		.hasArg()
         		.argName("count")
@@ -42,15 +43,15 @@ public class JavaExercise2Application implements CommandLineRunner {
                 .build();
         options.addOption(byeOption);
 
-        CommandLineParser parser = new DefaultParser();
-        HelpFormatter formatter = new HelpFormatter();
+        final CommandLineParser parser = new DefaultParser();
+        final HelpFormatter formatter = new HelpFormatter();
         CommandLine cmd;
 
         try {
             cmd = parser.parse(options, args);
         } catch (ParseException e) {
             log.error(e.getMessage(),e);
-            formatter.printHelp("application", options);
+            formatter.printHelp("Java Exercise 2", options);
 
             System.exit(1);
             return;
@@ -67,6 +68,8 @@ public class JavaExercise2Application implements CommandLineRunner {
 				}
 			} catch (NumberFormatException e) {
 				log.error("Invalid value for count variable");
+				System.exit(1);
+	            return;
 			}
         }
         
